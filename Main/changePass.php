@@ -1,8 +1,8 @@
 
 <?php
     
-    require_once('../Main/config.php');
-    require_once('../Main/database/dbhelper.php');
+	require_once('config.php');
+    require_once('database/dbhelper.php');
 	if(isset($_POST['submit']) && $_POST["password"] != '' && $_POST["newpassword"] != '' && $_POST["renewpassword"] != ''){
 		$password = $_POST['password'];
 		$newpassword = $_POST['newpassword'];
@@ -51,7 +51,7 @@
 ?>
 
 <?php 
-include("../Main/Layout/header.php");
+ include("Layout/header.php");
 ?>
 <!-- pages-title-start -->
 <section class="contact-img-area">

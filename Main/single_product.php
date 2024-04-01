@@ -87,37 +87,9 @@ if (isset($_GET['id'])) {
                                 });
                             }
                             </script> -->
-                            <div id="myDIV" style="padding-top:10px; margin-left:10px;">
-                                <button class="btn" onclick="setSize('S')">S</button>
-                                <button class="btn active" onclick="setSize('M')">M</button>
-                                <button class="btn" onclick="setSize('L')">L</button>
-                            </div>
-
-                            <script>
-                                var selectedSize = 'M'; // Kích thước mặc định
-
-                                function setSize(size) {
-                                    selectedSize = size; // Cập nhật kích thước đã chọn
-                                    updateActiveButton(); // Cập nhật trạng thái các nút
-                                    console.log('Size selected:', selectedSize); // In ra kích thước đã chọn (để kiểm tra)
-                                }
-
-                                function updateActiveButton() {
-                                    var buttons = document.querySelectorAll('#myDIV .btn'); // Lấy tất cả các nút trong phần tử có id là "myDIV"
-                                    buttons.forEach(function(button) {
-                                        if (button.textContent === selectedSize) {
-                                            button.classList.add('active'); // Thêm lớp 'active' cho nút đã chọn
-                                        } else {
-                                            button.classList.remove('active'); // Loại bỏ lớp 'active' cho các nút khác
-                                        }
-                                    });
-                                }
-                            </script>
-
-
                             
                             <div class="number"style="padding-top:10px;margin-left:10px;">
-                                <span class="number-buy">Số lượng</span>
+                                <span class="number-buy"">Số lượng</span>
                                 <input id="num" type="number" value="1" min="1" onchange="updatePrice()">
                             </div>
                             
@@ -152,12 +124,10 @@ if (isset($_GET['id'])) {
                             <script type="text/javascript">
                                 function addToCart(id) {
                                     var num = document.querySelector('#num').value; // số lượng
-                                    var selectedSize = document.querySelector('.btn.active').innerText; // Kích thước đã chọn
                                     $.post('api/cookie.php', {
                                         'action': 'add',
                                         'id': id,
-                                        'num': num,
-                                        'size': selectedSize // Thêm thông tin về kích thước vào đây
+                                        'num': num
                                     }, function(data) {
                                         location.reload()
                                     })

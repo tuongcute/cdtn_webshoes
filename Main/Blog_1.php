@@ -1,6 +1,6 @@
 
 <?php 
- include("../Main/Layout/header.php");
+ include("Layout/header.php");
 ?>
 <!-- pages-title-start -->
 <section class="contact-img-area">

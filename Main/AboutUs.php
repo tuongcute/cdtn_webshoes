@@ -1,6 +1,6 @@
 
 <?php 
-    include("../Main/Layout/header.php");
+ include("Layout/header.php");
 ?>
 <!-- pages-title-start -->
 <section class="contact-img-area">
@@ -38,9 +38,7 @@ Ngoài ra, chúng tôi luôn lắng nghe ý kiến và phản hồi từ khách 
     </body>
 </html>
 <hr class="opacity-20">
-<?php
-    require_once('../Main/Layout/footer.php');
- ?>
+<?php require_once('Layout/footer.php'); ?>
 
 
 <style>

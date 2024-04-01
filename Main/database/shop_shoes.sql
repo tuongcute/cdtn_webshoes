@@ -52,24 +52,22 @@ CREATE TABLE `order_details` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `size` int(2) NULL,
   `num` int(11) NOT NULL,
   `price` float NOT NULL,
   `status` varchar(255) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `id_user`,`size`, `num`, `price`, `status`) VALUES
-(172, 163, 1, 1,40, 1, 2400000, 'Đang chuẩn bị'),
-(173, 164, 2, 1,39, 1, 2500000, 'Đang chuẩn bị'),
-(176, 165, 5, 1,37, 1, 3200000, 'Đang chuẩn bị'),
-(177, 166, 4, 1,38, 1, 1500000, 'Đã nhận hàng');
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `id_user`, `num`, `price`, `status`) VALUES
+(172, 163, 1, 1, 1, 2400000, 'Đang chuẩn bị'),
+(173, 164, 2, 1, 1, 2500000, 'Đang chuẩn bị'),
+(176, 165, 5, 1, 1, 3200000, 'Đang chuẩn bị'),
+(177, 166, 4, 1, 1, 1500000, 'Đã nhận hàng');
 
 
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
-  `size` int(2) NULL,
   `price` float NOT NULL,
   `number` float NOT NULL,
   `thumbnail` varchar(500) NOT NULL,

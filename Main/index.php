@@ -5,12 +5,10 @@
 	}
  */ ?>
 
+<?php require_once('database/config.php');
+require_once('database/dbhelper.php');?>
 <?php 
-require_once('../Main/database/config.php');
-require_once('../Main/database/dbhelper.php');
-?>
-<?php
-    include("../Main/Layout/header.php");
+ include("Layout/header.php");
 ?>
 
 <body>

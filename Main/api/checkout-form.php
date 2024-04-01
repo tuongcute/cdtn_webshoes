@@ -1,5 +1,5 @@
 <?php
-require_once('../dbhelper.php');
+require_once('database/dbhelper.php');
 
 if (!empty($_POST)) {
     $cart = [];

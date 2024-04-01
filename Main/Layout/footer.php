@@ -1,6 +1,6 @@
 
 <?php
-include('../config.php');
+include('config.php');
 ?>
 <!--------------------FOOTER--------------------------- -->
 <footer class="section-p1"><!--mục footer -->

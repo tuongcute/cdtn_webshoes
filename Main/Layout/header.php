@@ -1,9 +1,9 @@
 
 <?php
 
-require_once('../config.php');
-require_once('../dbhelper.php');
-require_once('../utility.php');
+require_once('config.php');
+require_once('database/dbhelper.php');
+require_once('utils/utility.php');
     $cart = [];
     if (isset($_COOKIE['cart'])) {
         $json = $_COOKIE['cart'];
@@ -193,7 +193,7 @@ require_once('../utility.php');
                                     <div class="mobile-menu">
                                         <nav id="dropdown">
                                             <ul>
-                                                <li><a href="../index.php">Home</a></li>
+                                                <li><a href="index.php">Home</a></li>
                                                 <li><a href="#">Shop</a>
                                                     <ul>
                                                         <?php
@@ -216,7 +216,7 @@ require_once('../utility.php');
                                                         ?>
                                                     </ul>
                                                 </li>
-                                                <li><a href="../AboutUs.php">About US</a></li>
+                                                <li><a href="AboutUs.php">About US</a></li>
                                                 <li><a href="#">Blog</a>
                                                         <ul>
                                                             <li><a href="blog_1.php">7 TIPS PHỐI ĐỒ VỚI VARSITY JACKET</a></li>
