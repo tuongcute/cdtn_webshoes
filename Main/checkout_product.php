@@ -358,9 +358,11 @@ if (count($idList) > 0) {
                                          $total = 0;
                                          foreach ($cartList as $item) {
                                              $num = 0;
+                                             $size = '';
                                              foreach ($cart as $value) {
                                                  if ($value['id'] == $item['id']) {
                                                      $num = $value['num'];
+                                                     $size = $value['size']; // Lấy thông tin về size từ giỏ hàng
                                                      break;
                                                  }
                                              }
@@ -389,6 +391,7 @@ if (count($idList) > 0) {
                                                         <div class="product-total">
                                                             <span class="amount">' . number_format($num * $item['price'], 0, ',', '.') . '<span> VNĐ</span></span>
                                                         </div>
+                                                        <div class="product-size">Size: ' . $size . '</div> <!-- Hiển thị thông tin về size -->
                                                     </div>
                                                 </div>
                                             </div>

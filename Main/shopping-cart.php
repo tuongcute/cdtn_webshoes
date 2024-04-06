@@ -132,6 +132,7 @@ require_once('utils/utility.php');
                                         <th class="low8">STT</th>
                                         <th class="low1">Ảnh Sản Phẩm</th>
                                         <th class="low1">Tên Sản Phẩm</th>
+                                        <th class="low7">Kích Thước</th>
                                         <th class="low7">Số Lượng</th>
                                         <th class="low7">Giá</th>
                                         <th class="low7">Tổng Tiền</th>
@@ -161,6 +162,8 @@ require_once('utils/utility.php');
                                                 <td class="sop-cart an-shop-cart">
                                                     <a>' . $item['title'] . '</a>
                                                 </td>
+                                                <td class="sop-cart an-shop-cart">' . $item['size'] . '</td> <!-- Hiển thị kích thước -->
+
                                                 <td class="sop-cart an-sh">
                                                     <div class="quantity ray">
                                                         <input class="input-text qty text" id="' . $itemId . '_num" type="number" size="4" title="Qty" value="' . $num . '" min="1" onchange="updatePrice(\'' . $itemId . '\', ' . $item['price'] . ')" >
@@ -241,14 +244,17 @@ require_once('utils/utility.php');
     function addToCart(button) {
     var itemId = button.getAttribute('data-item-id');
     var num = document.getElementById(itemId + '_num').value;
+    // Lấy giá trị kích thước đã chọn từ nút kích thước trước đó
+    var selectedSize = document.querySelector('.btn.active').innerText; 
 
     $.post('api/cookie.php', {
         'action': 'update',
         'id': itemId.split('_')[1],
-        'num': num
+        'num': num,
+        'size': selectedSize // Thêm thông tin về kích thước vào dữ liệu gửi đi
     }, function (data) {
         location.reload();
-    });
+    }); 
 }
     function updatePrice(itemId, itemPrice) {
         // Kiểm tra nếu giá trị nhập vào không phải là số hoặc là số nguyên âm

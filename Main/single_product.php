@@ -87,9 +87,39 @@ if (isset($_GET['id'])) {
                                 });
                             }
                             </script> -->
+                            <div id="myDIV" style="padding-top:10px; margin-left:10px;">
+                                <button class="btn" onclick="setSize(34)">34</button>
+                                <button class="btn active" onclick="setSize(35)">35</button>
+                                <button class="btn" onclick="setSize(36)">36</button>
+                            </div>
+
+                            <script>
+                                function setSize(size) {
+                                    selectedSize = size; // Cập nhật kích thước đã chọn
+                                    updateActiveButton(); // Cập nhật trạng thái các nút
+
+                                    // Lưu kích thước vào Cookie
+                                    document.cookie = "selectedSize=" + encodeURIComponent(selectedSize) + "; path=/"; // Lưu vào Cookie
+
+                                    console.log('Size selected:', selectedSize); // In ra kích thước đã chọn (để kiểm tra)
+                                }
+
+                                function updateActiveButton() {
+                                    var buttons = document.querySelectorAll('#myDIV .btn'); // Lấy tất cả các nút trong phần tử có id là "myDIV"
+                                    buttons.forEach(function(button) {
+                                        if (button.textContent === selectedSize) {
+                                            button.classList.add('active'); // Thêm lớp 'active' cho nút đã chọn
+                                        } else {
+                                            button.classList.remove('active'); // Loại bỏ lớp 'active' cho các nút khác
+                                        }
+                                    });
+                                }
+                            </script>
+
+
                             
                             <div class="number"style="padding-top:10px;margin-left:10px;">
-                                <span class="number-buy"">Số lượng</span>
+                                <span class="number-buy">Số lượng</span>
                                 <input id="num" type="number" value="1" min="1" onchange="updatePrice()">
                             </div>
                             
@@ -108,15 +138,13 @@ if (isset($_GET['id'])) {
                                     </div>';
                                 }
                             ?>
-                            
+                        
 
                             <script>
                                 function updatePrice() {
-                                    var price = document.getElementById('price').innerText; // giá tiền
-                                    var num = document.querySelector('#num').value; // số lượng
-                                    var gia1 = document.querySelector('.gia').innerText;
-                                    var gia = price.match(/\d/g);
-                                    gia = gia.join("");
+                                    var price = parseFloat(document.getElementById('price').innerText.replace(/\D/g, '')); // Giá sản phẩm
+                                    var num = parseInt(document.querySelector('#num').value); // Số lượng sản phẩm
+                                    var gia1 = parseFloat(document.querySelector('.gia').innerText); // Giá sản phẩm ban đầu
                                     var tong = gia1 * num;
                                     document.getElementById('price').innerHTML = tong.toLocaleString();
                                 }
@@ -124,23 +152,41 @@ if (isset($_GET['id'])) {
                             <script type="text/javascript">
                                 function addToCart(id) {
                                     var num = document.querySelector('#num').value; // số lượng
+                                    // Lấy kích thước từ Cookie
+                                    var selectedSize = getCookie("selectedSize");
                                     $.post('api/cookie.php', {
                                         'action': 'add',
                                         'id': id,
-                                        'num': num
+                                        'num': num,
+                                        'size': selectedSize // Thêm thông tin về kích thước vào đây
                                     }, function(data) {
                                         location.reload()
                                     })
                                 }
 
                                 function buyNow(id) {
-                                        $.post('api/cookie.php', {
-                                            'action': 'add',
-                                            'id': id,
-                                            'num': 1
-                                        }, function(data) {
-                                            location.assign("checkout_product.php");
-                                        })
+                                    // Lấy kích thước từ Cookie
+                                    var num = parseInt(document.getElementById('num').value); // Lấy số lượng sản phẩm từ trường nhập liệu
+                                    var selectedSize = getCookie("selectedSize");
+                                    $.post('api/cookie.php', {
+                                        'action': 'add',
+                                        'id': id,
+                                        'num': num, // Truyền số lượng sản phẩm
+                                        'size': selectedSize
+                                    }, function(data) {
+                                        location.assign("checkout_product.php");
+                                    });
+                                }
+                                // Hàm để lấy giá trị của Cookie
+                                function getCookie(name) {
+                                    var nameEQ = name + "=";
+                                    var ca = document.cookie.split(';');
+                                    for(var i=0;i < ca.length;i++) {
+                                        var c = ca[i];
+                                        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                                    }
+                                    return null;
                                 }
                             </script>
                         </div>
