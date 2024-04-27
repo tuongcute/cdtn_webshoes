@@ -1,6 +1,4 @@
-
 <?php
-
 require_once('config.php');
 require_once('database/dbhelper.php');
 require_once('utils/utility.php');
@@ -23,6 +21,7 @@ require_once('utils/utility.php');
         $cartList = [];
     }
 ?>
+
 <!doctype html>
 <html class="no-js" lang="">
 <head>
@@ -71,12 +70,13 @@ require_once('utils/utility.php');
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     
-    
     <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script><!--link lấy icon -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title>Toryco 1993 Store</title>
 </head>
+
 <body></body>
+
 <!-----------------------HEARDER ----------------------------------------->
         <div id="preloder">
 			<div class="loader"></div>
@@ -184,7 +184,6 @@ require_once('utils/utility.php');
                                                         <li><a href="blog_2.php">CÚ BẮT TAY ĐẬM CHẤT VĂN HÓA ĐƯỜNG PHỐ</a></li>
                                                     </ul>
                                             </li>
-                                            <li><a href="contact_us.php">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -311,7 +310,7 @@ require_once('utils/utility.php');
             
         </header>
         <!-- pages-title-end --
-   <!-- jquery latest version -->
+   <-- jquery latest version -->
    <script src="js/vendor/jquery-1.12.0.min.js"></script>
     <!-- bootstrap js -->
     <script src="js/bootstrap.min.js"></script>

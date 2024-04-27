@@ -80,6 +80,7 @@ if (isset($_GET['id'])) {
             <!-- Brand -->
             <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
                 <h3 class="text-success"><img src="/Web/images/logo.png" width="40" ><span class="text-info">TORYCO 1993</span>STORE</h3> 
+                <h3 class="text-success"><img src="/Web/images/logo.png" width="40" ><span class="text-info">TORYCO 1993</span>STORE</h3> 
             </a>
             <!-- User menu (mobile) -->
             <div class="navbar-user d-lg-none">

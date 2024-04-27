@@ -67,7 +67,7 @@ if (isset($_GET['id'])) {
                         </div>
                         <div class="about">
                             <p style="padding-top:105px;margin-left:10px; width:300px"><?= $product['content'] ?></p>
-                            <p style="padding-top:20px;margin-left:10px; width:300px">Thương Hiệu: <span style="font-weight: 600; color:#FF6600"><?= $product['collection_name'] ?></span></p>
+                            <p style="padding-top:20px;margin-left:10px; width:300px">Bộ Sưu Tập: <span style="font-weight: 600; color:#FF6600"><?= $product['collection_name'] ?></span></p>
                             <!-- <div id="myDIV"style="padding-top:10px;margin-left:10px;">
                                 <button class="btn">S</button>
                                 <button class="btn active">M</button>

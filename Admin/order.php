@@ -264,6 +264,7 @@ header("content-type:text/html; charset=UTF-8");
                                     <th scope="col">Số Thứ Tự</th>
                                     <th scope="col">Tên Khách Hàng</th>
                                     <th scope="col">Tên Sản Phẩm</th>
+                                    <th scope="col">Size</th>
                                     <th scope="col">Số Lượng</th>
                                     <th scope="col">Đơn Giá</th>
                                     <th scope="col">Địa Chỉ</th>
@@ -305,6 +306,7 @@ header("content-type:text/html; charset=UTF-8");
                                                             <td>' . (++$index) . '</td>
                                                             <td class="text-heading font-semibold">' . $item['fullname'] . '</td>
                                                             <td class="text-heading font-semibold">' . $item['title'] . '</td>
+                                                            <td class="text-heading font-semibold">' . $item['size'] . '</td>
                                                             <td class="text-heading font-semibold">' . $item['num'] . '</td>
                                                             <td class="text-heading font-semibold">' . number_format($item['price'], 0, ',', '.') . ' VNĐ</td>
                                                             <td class="text-heading font-semibold">' . $item['address'] . '</td>
