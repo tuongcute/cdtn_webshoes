@@ -68,25 +68,7 @@ if (isset($_GET['id'])) {
                         <div class="about">
                             <p style="padding-top:105px;margin-left:10px; width:300px"><?= $product['content'] ?></p>
                             <p style="padding-top:20px;margin-left:10px; width:300px">Bộ Sưu Tập: <span style="font-weight: 600; color:#FF6600"><?= $product['collection_name'] ?></span></p>
-                            <!-- <div id="myDIV"style="padding-top:10px;margin-left:10px;">
-                                <button class="btn">S</button>
-                                <button class="btn active">M</button>
-                                <button class="btn">L</button>
-                            
-                            </div>
-                            
-                            <script>
-                            // Add active class to the current button (highlight it)
-                            var header = document.getElementById("myDIV");
-                            var btns = header.getElementsByClassName("btn");
-                            for (var i = 0; i < btns.length; i++) {
-                                btns[i].addEventListener("click", function() {
-                                var current = document.getElementsByClassName("active");
-                                current[0].className = current[0].className.replace(" active", "");
-                                this.className += " active";
-                                });
-                            }
-                            </script> -->
+                        
                             <div id="myDIV" style="padding-top:10px; margin-left:10px;">
                                 <button class="btn" onclick="setSize(34)">34</button>
                                 <button class="btn active" onclick="setSize(35)">35</button>
@@ -201,36 +183,66 @@ if (isset($_GET['id'])) {
                 </div>
                 <div class="product-restaurants">
                     <div class="row">
-                        <?php
-                        $sql = 'select * from product';
-                        $productList = executeResult($sql);
-                        $index = 1;
-                        foreach ($productList as $item) {
-                            echo '
-                                <div class="col">
-                                    <a href="single_product.php?id=' . $item['id'] . '">
-                                        <img class="thumbnail" src="../Admin/product/' . $item['thumbnail'] . '" alt="">
-                                        <div class="title">
-                                            <p>' . $item['title'] . '</p>
+                    <?php
+                    // Kiểm tra xem ID sản phẩm đã được truyền qua tham số truy vấn trong URL chưa
+                    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+                        // Lấy ID sản phẩm từ tham số truy vấn trong URL
+                        $product_id = $_GET['id'];
+
+                        // Tạo câu truy vấn SQL để lấy ID loại sản phẩm của sản phẩm đó
+                        $sql_category = "SELECT id_category FROM product WHERE id = $product_id";
+                        $result_category = executeSingleResult($sql_category);
+
+                        // Kiểm tra xem có kết quả trả về từ câu truy vấn SQL không
+                        if ($result_category && isset($result_category['id_category'])) {
+                            $id_category = $result_category['id_category'];
+
+                            // Tạo câu truy vấn SQL để lấy các sản phẩm cùng loại
+                            $sql_products = "SELECT * FROM product WHERE id_category = $id_category";
+                            $productList = executeResult($sql_products);
+
+                            // Kiểm tra xem có sản phẩm cùng loại hay không
+                            if ($productList) {
+                                // Hiển thị danh sách sản phẩm cùng loại
+                                foreach ($productList as $item) {
+                                    echo '
+                                        <div class="col">
+                                            <a href="single_product.php?id=' . $item['id'] . '">
+                                                <img class="thumbnail" src="../Admin/product/' . $item['thumbnail'] . '" alt="">
+                                                <div class="title">
+                                                    <p>' . $item['title'] . '</p>
+                                                </div>
+                                                <div class="price">
+                                                    <span>' . number_format($item['price'], 0, ',', '.') . ' VNĐ</span>
+                                                </div>
+                                                <div class="more">
+                                                    <div class="star">
+                                                        <img src="images/icon/icon-star.svg" alt="">
+                                                        <span>4.9</span>
+                                                    </div>
+                                                    <div class="time">
+                                                        <img src="images/icon/icon-clock.svg" alt="">
+                                                        <span>99 comment</span>
+                                                    </div>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="price">
-                                            <span>' . number_format($item['price'], 0, ',', '.') . ' VNĐ</span>
-                                        </div>
-                                        <div class="more">
-                                            <div class="star">
-                                                <img src="images/icon/icon-star.svg" alt="">
-                                                <span>4.9</span>
-                                            </div>
-                                            <div class="time">
-                                                <img src="images/icon/icon-clock.svg" alt="">
-                                                <span>99 comment</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                ';
+                                    ';
+                                }
+                            } else {
+                                // Hiển thị thông báo nếu không có sản phẩm cùng loại
+                                echo '<p>Không có sản phẩm cùng loại.</p>';
+                            }
+                        } else {
+                            // Hiển thị thông báo nếu không tìm thấy thông tin về loại sản phẩm của sản phẩm đó
+                            echo '<p>Không tìm thấy thông tin về loại sản phẩm của sản phẩm này.</p>';
                         }
-                        ?>
+                    } else {
+                        // Hiển thị thông báo nếu không có ID sản phẩm trong tham số truy vấn hoặc ID không hợp lệ
+                        echo '<p>Không có ID sản phẩm hoặc ID sản phẩm không hợp lệ.</p>';
+                    }
+                    ?>
+
                     </div>
                 </div>
             </section>

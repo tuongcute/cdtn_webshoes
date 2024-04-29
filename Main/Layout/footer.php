@@ -45,7 +45,7 @@ footer h4 {
 
 footer p {
     color: rgb(255, 255, 255);
-    font-size: 13px;
+    font-size: 20px;
     text-decoration: none;
     margin-bottom: 10px; /* Giảm khoảng cách dưới của đoạn văn */
 }
@@ -56,10 +56,15 @@ footer li {
     font-weight: bold;
 }
 
+footer li .fa{
+    font-size: 20px;
+}
+
 iframe {
     width: 100%; /* Tự động điều chỉnh chiều rộng của bản đồ */
     height: 150px; /* Thiết lập chiều cao cố định cho bản đồ */
 }
+
 
 /* Responsive */
 @media (max-width: 768px) {
