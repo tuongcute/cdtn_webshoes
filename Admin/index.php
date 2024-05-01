@@ -15,14 +15,11 @@ header("content-type:text/html; charset=UTF-8");
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Luxury Store</title>
+  <title>Toryco 1993 Store</title>
   <link rel="stylesheet" href="./style.css">
   <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
-<!-- bytewebster.com -->
-<!-- bytewebster.com -->
-<!-- bytewebster.com -->
 <body>
 <!-- Dashboard -->
 <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -88,7 +85,7 @@ header("content-type:text/html; charset=UTF-8");
                 <!-- User (md) -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../Main/index.php">
+                        <a class="nav-link" href="/Main/index.php">
                             <i class="bi bi-house-heart-fill"></i></i> Trang Chủ
                         </a>
                     </li>
@@ -250,10 +247,10 @@ header("content-type:text/html; charset=UTF-8");
                                             // Lấy danh sách Sản Phẩm
                                             if (!isset($_GET['page'])) {
                                                 $pg = 1;
-                                                echo 'Bạn đang ở trang: 1';
+                                                echo ' Bạn đang ở trang: 1';
                                             } else {
                                                 $pg = $_GET['page'];
-                                                echo 'Bạn đang ở trang: ' . $pg;
+                                                echo ' Bạn đang ở trang: ' . $pg;
                                             }
                                             try {
 
@@ -340,7 +337,7 @@ header("content-type:text/html; charset=UTF-8");
                                 $result = mysqli_query($conn, $sql);
                                 if (mysqli_num_rows($result)) {
                                     $numrow = mysqli_num_rows($result);
-                                    $current_page = ceil($numrow / 5);
+                                    $current_page = ceil($numrow / 60);
                                     // echo $current_page;
                                 }
                                 for ($i = 1; $i <= $current_page; $i++) {

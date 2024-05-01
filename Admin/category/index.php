@@ -96,7 +96,7 @@ header("content-type:text/html; charset=UTF-8");
                 <!-- User (md) -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../../index.php">
+                        <a class="nav-link" href="/Main/index.php">
                             <i class="bi bi-house-heart-fill"></i></i> Trang chủ
                         </a>
                     </li>
@@ -118,8 +118,7 @@ header("content-type:text/html; charset=UTF-8");
                     <div class="row align-items-center">
                         <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                             <!-- Title -->
-                            <h1 class="h2 mb-0 ls-tight">
-                                <img src="/Web/images/logo.png" width="60"> Toryco 1993 Store</h1>
+                            <h1 class="h2 mb-0 ls-tight">Toryco 1993 Store</h1>
                         </div>
                         <!-- Actions -->
                         
@@ -276,7 +275,7 @@ header("content-type:text/html; charset=UTF-8");
                                             } else {
                                                 $page = 1;
                                             }
-                                            $limit = 5;
+                                            $limit = 8;
                                             $start = ($page - 1) * $limit;
                                             $sql = "SELECT * FROM category limit $start,$limit";;
                                             executeResult($sql);
@@ -318,7 +317,7 @@ header("content-type:text/html; charset=UTF-8");
                             $result = mysqli_query($conn, $sql);
                             if (mysqli_num_rows($result)) {
                                 $numrow = mysqli_num_rows($result);
-                                $current_page = ceil($numrow / 5);
+                                $current_page = ceil($numrow / 60);
                                 // echo $current_page;
                             }
                             for ($i = 1; $i <= $current_page; $i++) {
