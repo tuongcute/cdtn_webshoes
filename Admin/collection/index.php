@@ -118,8 +118,7 @@ header("content-type:text/html; charset=UTF-8");
                     <div class="row align-items-center">
                         <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                             <!-- Title -->
-                            <h1 class="h2 mb-0 ls-tight">
-                                <img src="/Web/images/logo.png" width="60"> Toryco 1993 Store</h1>
+                            <h1 class="h2 mb-0 ls-tight">Toryco 1993 Store</h1>
                         </div>
                         <!-- Actions -->
                         
