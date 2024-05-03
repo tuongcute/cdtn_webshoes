@@ -139,6 +139,141 @@ require_once('database/dbhelper.php');?>
 <!-- new-products section start -->
 <section class="featured-products single-products section-padding-top">
     <div class="container">
+    <div class="row">
+            <div class="col-xs-12">
+                <div class="section-title">
+                    <h3>LỌC SẢN PHẨM
+                    </h3>
+                    <div class="section-icon">
+                        <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <!-- Cột 1: Tùy chọn lọc -->
+        <div class="col-md-2">
+            <!-- Form để chọn phạm vi giá -->
+            <form id="filter-form" action="#" method="GET">
+                <label>
+                    <input type="radio" name="price-range" value="1">
+                    Từ 0 đến 1 triệu
+                </label><br>
+                <label>
+                    <input type="radio" name="price-range" value="2">
+                    Từ 1 đến 2 triệu
+                </label><br>
+                <label>
+                    <input type="radio" name="price-range" value="3">
+                    Từ 2 đến 3 triệu
+                </label><br>
+                <label>
+                    <input type="radio" name="price-range" value="4">
+                    Từ 3 đến 4 triệu
+                </label><br>
+            </form>
+        </div>
+
+        <!-- Cột 2: Kết quả -->
+        <div class="col-md-10">
+            <div id="tab-carousel-1" class="re-owl-carousel owl-carousel product-slider owl-theme">
+                <?php
+                    // Xử lý dữ liệu người dùng gửi đi để lọc sản phẩm
+                    if(isset($_GET['price-range'])) {
+                        $selected_price_range = $_GET['price-range'];
+                        
+                        // Mã PHP lọc sản phẩm dựa trên dữ liệu người dùng chọn
+                        $sql = "SELECT * FROM product";
+                        $feature_product = executeResult($sql);
+                        
+                        $used_feproducts = array();
+                        foreach ($feature_product as $item) {
+                            // Lọc sản phẩm dựa trên phạm vi giá được chọn
+                            $price_min = ($selected_price_range - 1) * 1000000;
+                            $price_max = $selected_price_range * 1000000;
+                            
+                            if ($item['price'] >= $price_min && $item['price'] <= $price_max && !in_array($item['title'], $used_feproducts)) {
+                                array_push($used_feproducts, $item['title']);
+                                // Hiển thị thông tin sản phẩm
+                                echo '
+                                <div class="col-xs-12">
+                                    <div class="single-product">
+                                        <div class="product-img">
+                                            <div class="pro-type">
+                                                <span>sale</span>
+                                            </div>
+                                            <a href="single_product.php?id=' . $item['id'] . '"> 
+                                                <img class="thumbnail" src="../Admin/product/' . $item['thumbnail'] . '" alt="' . $item['title'] . '" />
+                                                <img class="secondary-image" alt="' . $item['title'] . '" src="../Admin/product/' . $item['thumbnail'] . '">
+                                            </a>
+                                        </div>
+                                        <div class="product-dsc">
+                                            <h3><a href="#">' . $item['title'] . '</a></h3>
+                                            <div class="star-price">
+                                                <span class="price-left">' . number_format($item['price'], 0, ',', '.') . ' VNĐ</span>
+                                                <span class="star-right">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-half-o"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="actions-btn">
+                                            <!-- Các thao tác khác, nếu có -->
+                                        </div>
+                                    </div>
+                                </div>';
+                            }
+                        }
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript để tự động gửi biểu mẫu khi người dùng chọn tùy chọn và hiển thị nút chọn (tick) lên
+        document.querySelectorAll('input[name="price-range"]').forEach(function(input) {
+            input.addEventListener('change', function() {
+                // Bỏ chọn tất cả các nhãn
+                document.querySelectorAll('label').forEach(function(label) {
+                    label.classList.remove('selected');
+                });
+                // Hiển thị nút chọn (tick) cho nhãn tương ứng với tùy chọn được chọn
+                var selectedLabel = this.parentNode;
+                selectedLabel.classList.add('selected');
+                // Gửi biểu mẫu
+                document.getElementById('filter-form').submit();
+            });
+        });
+
+        // Xử lý sự kiện khi nhãn được click
+        document.querySelectorAll('label').forEach(function(label) {
+            label.addEventListener('click', function() {
+                // Kích hoạt sự kiện "change" cho input tương ứng
+                var input = this.querySelector('input');
+                input.checked = true;
+                input.dispatchEvent(new Event('change'));
+            });
+        });
+
+        // Xử lý cuộn trang sau khi gửi biểu mẫu
+        document.getElementById('filter-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu mặc định
+
+            // Lấy vị trí của phần lọc
+            var filterPosition = document.getElementById('filter-form').offsetTop;
+            
+            // Sử dụng requestAnimationFrame để đảm bảo cuộn trang xảy ra sau khi trang đã được cập nhật
+            window.requestAnimationFrame(function() {
+                // Cuộn trang về vị trí của phần lọc
+                window.scrollTo({top: filterPosition, behavior: 'smooth'});
+            });
+        });
+    </script>
+
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="section-title">
