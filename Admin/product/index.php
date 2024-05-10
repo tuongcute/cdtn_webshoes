@@ -100,7 +100,7 @@ header("content-type:text/html; charset=UTF-8");
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../../logout.php" onclick="return confirm('Are you sure you want to logout?')">
+                        <a class="nav-link" href="/Main/logout.php" onclick="return confirm('Are you sure you want to logout?')">
                             <i class="bi bi-box-arrow-left"></i> Logout
                         </a>
                     </li>
@@ -233,98 +233,87 @@ header("content-type:text/html; charset=UTF-8");
                     </div>
                 </div>
                 <div class="card shadow border-0 mb-7">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Danh Sách Sản Phẩm</h5>
-                        <a href="add.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
-                                    <span class=" pe-2">
-                                        <i class="bi bi-plus"></i>
-                                    </span>
-                                    <span>Thêm Sản Phẩm</span>
-                        </a>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-nowrap">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Số Thứ Tự</th>
-                                    <th scope="col">Ảnh Sản Phẩm</th>
-                                    <th scope="col">Tên Sản Phẩm</th>
-                                    <th scope="col">Danh Mục</th>
-                                    <th scope="col">Thương Hiệu</th>
-                                    <th scope="col">Số Lượng</th>
-                                    <th scope="col">Giá Sản Phẩm</th>
-                                    <th scope="col">Mô tả Sản Phẩm</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody>
-                                <tr>
-                                    <?php
-                                        // Lấy danh sách Sản Phẩm
-                                        if (!isset($_GET['page'])) {
-                                            $pg = 1;
-                                            echo 'Bạn đang ở trang: 1';
-                                        } else {
-                                            $pg = $_GET['page'];
-                                            echo 'Bạn đang ở trang: ' . $pg;
-                                        }
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Danh Sách Sản Phẩm</h5>
+        <form action="" method="GET">
+            <input type="text" name="search" placeholder="Tìm kiếm theo tên">
+            <button type="submit">Tìm kiếm</button>
+        </form>
+        <a href="add.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
+            <span class=" pe-2">
+                <i class="bi bi-plus"></i>
+            </span>
+            <span>Thêm Sản Phẩm</span>
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-nowrap">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Số Thứ Tự</th>
+                    <th scope="col">Ảnh Sản Phẩm</th>
+                    <th scope="col">Tên Sản Phẩm</th>
+                    <th scope="col">Danh Mục</th>
+                    <th scope="col">Thương Hiệu</th>
+                    <th scope="col">Số Lượng</th>
+                    <th scope="col">Giá Sản Phẩm</th>
+                    <th scope="col">Mô tả Sản Phẩm</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Kết nối CSDL và xử lý tìm kiếm
+                $conn = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);
+                if(isset($_GET['search'])) {
+                    $search = $_GET['search'];
+                    $sql = "SELECT product.*, category.name as category_name, collections.name as collection_name FROM product, category, collections 
+                            WHERE product.id_category = category.id AND product.id_sanpham = collections.id 
+                            AND product.title LIKE '%$search%'";
+                } else {
+                    // Nếu không có từ khóa tìm kiếm, sử dụng câu truy vấn ban đầu
+                    $sql = "SELECT product.*, category.name as category_name, collections.name as collection_name FROM product, category, collections 
+                            WHERE product.id_category = category.id AND product.id_sanpham = collections.id";
+                }
 
-                                        try {
-
-                                            if (isset($_GET['page'])) {
-                                                $page = $_GET['page'];
-                                            } else {
-                                                $page = 1;
-                                            }
-                                            $limit = 8;
-                                            $start = ($page - 1) * $limit;
-                                            $sql = "SELECT product.*, category.name as category_name, collections.name as collection_name FROM product, category, collections where product.id_category = category.id 
-                                            AND product.id_sanpham = collections.id limit $start,$limit";
-                                            executeResult($sql);
-                                            // $sql = 'select * from product limit $star,$limit';
-                                            $productList = executeResult($sql);
-
-                                            $index = 1;
-                                            foreach ($productList as $item) {
-                                                echo '  <tr>
-                                                            <td>' . ($index++) . '</td>
-                                                            <td style="text-align:center">
-                                                                <img src="' . $item['thumbnail'] . '" alt="" class="avatar avatar-sm rounded-circle me-2">
-                                                            </td>
-                                                            <td class="text-heading font-semibold">' . $item['title'] . '</td>
-                                                            <td class="text-heading font-semibold">' . $item['category_name'] . '</td>
-                                                            <td class="text-heading font-semibold">' . $item['collection_name'] . '</td>
-                                                            <td>' . $item['number'] . '</td>
-                                                            <td>' . number_format($item['price'], 0, ',', '.') . ' VNĐ</td>
-                                                            
-                                                            <td style="max-width: 150px;
-                                                            overflow: hidden;
-                                                            text-overflow: ellipsis;
-                                                            white-space: nowrap;"> ' . $item['content'] . '</td>
-                                                            
-                                                            <td>
-                                                                <a href="add.php?id=' . $item['id'] . '">
-                                                                    <button class=" btn btn-warning">Sửa</button> 
-                                                                </a> 
-                                                            </td>
-                                                            <td>            
-                                                            <button class="btn btn-danger" onclick="deleteProduct(' . $item['id'] . ')">Xoá</button>
-                                                            </td>
-                                                        </tr>';
-                                            }
-                                        } catch (Exception $e) {
-                                            die("Lỗi thực thi sql: " . $e->getMessage());
-                                        }
-                                    ?>
-                                    
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer border-0 py-5">
+                try {
+                    // Thực hiện câu truy vấn và hiển thị kết quả tương ứng
+                    $result = mysqli_query($conn, $sql);
+                    $index = 1;
+                    while($row = mysqli_fetch_assoc($result)) {
+                        echo '<tr>
+                                <td>' . ($index++) . '</td>
+                                <td style="text-align:center">
+                                    <img src="' . $row['thumbnail'] . '" alt="" class="avatar avatar-sm rounded-circle me-2">
+                                </td>
+                                <td class="text-heading font-semibold">' . $row['title'] . '</td>
+                                <td class="text-heading font-semibold">' . $row['category_name'] . '</td>
+                                <td class="text-heading font-semibold">' . $row['collection_name'] . '</td>
+                                <td>' . $row['number'] . '</td>
+                                <td>' . number_format($row['price'], 0, ',', '.') . ' VNĐ</td>
+                                <td style="max-width: 150px;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;"> ' . $row['content'] . '</td>
+                                <td>
+                                    <a href="add.php?id=' . $row['id'] . '">
+                                        <button class=" btn btn-warning">Sửa</button> 
+                                    </a> 
+                                </td>
+                                <td>            
+                                    <button class="btn btn-danger" onclick="deleteProduct(' . $row['id'] . ')">Xoá</button>
+                                </td>
+                            </tr>';
+                    }
+                } catch (Exception $e) {
+                    die("Lỗi thực thi sql: " . $e->getMessage());
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer border-0 py-5">
                         
                         <nav aria-label="Page navigation example">
                           <ul class="pagination">
@@ -334,7 +323,7 @@ header("content-type:text/html; charset=UTF-8");
                             $result = mysqli_query($conn, $sql);
                             if (mysqli_num_rows($result)) {
                                 $numrow = mysqli_num_rows($result);
-                                $current_page = ceil($numrow / 8);
+                                $current_page = ceil($numrow / 60);
                                 // echo $current_page;
                             }
                             for ($i = 1; $i <= $current_page; $i++) {
@@ -353,7 +342,9 @@ header("content-type:text/html; charset=UTF-8");
                           </ul>
                         </nav>
                     </div>
-                </div>
+
+</div>
+
             </div>
         </main>
     </div>

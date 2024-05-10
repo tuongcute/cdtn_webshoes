@@ -277,7 +277,7 @@ require_once('database/dbhelper.php');?>
         <div class="row">
             <div class="col-xs-12">
                 <div class="section-title">
-                    <h3>SẢN PHẨM TIÊU BIỂU</h3>
+                    <h3>TẤT CẢ SẢN PHẨM</h3>
                     <div class="section-icon">
                         <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
                     </div>
@@ -413,72 +413,7 @@ require_once('database/dbhelper.php');?>
 </section>
 <!-- new-products section end -->
 
-<!--------------------NEW ARRIVALS--------------------------- -->
-<!-- new-products section start -->
-<section class="new-products single-products section-padding-top">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="section-title">
-                    <h3>SẢN PHẨM HOT</h3>
-                    <div class="section-icon">
-                        <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div id="new-products" class="owl-carousel product-slider owl-theme">
-            <?php
-            $sql = 'SELECT * from product, order_details where order_details.product_id=product.id order by order_details.num DESC limit 6';
-            $productList = executeResult($sql);
-            $index = 1;
-            $used_products = array ();
-            foreach ($productList as $item) {
-                if (!in_array ($item ['thumbnail'], $used_products)) {  //check if the product id is not in the new array
-                    array_push ($used_products, $item ['thumbnail']); //add the product id to the new array
-                    echo '
-            <div class="col-xs-12">
-                <div class="single-product">
-                    <div class="product-img">
-                        <div class="pro-type">
-                            <span>sale</span>
-                        </div>
-                        <a href="single_product.php?id=' . $item['product_id'] . '">
-                            <img class="thumbnail" src="../Admin/product/' . $item['thumbnail'] . '" alt="' . $item['title'] . '" />
-                            <img class="secondary-image" alt="' . $item['title'] . '" src="../Admin/product/' . $item['thumbnail'] . '">
-                        </a>
-                    </div>
-                    <div class="product-dsc">
-                        <h3><a href="#">' . $item['title'] . '</a></h3>
-                        <div class="star-price">
-                            <span class="price-left">' . number_format($item['price'], 0, ',', '.') . ' VNĐ</span>
-                            <span class="star-right">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-o"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="actions-btn">
-                        
-                    </div>
-                </div>
-            </div>';
-                    $index++;
-                    if ($index > 6) {
-                        break;
-                    }
-                    }
-            }
-            ?>
-            </div>
-        </div>
-    </div>
-</section>
-<!--------------------BANNER LILIWYUN--------------------------- -->
+
 
 <!--------------------WHAT'S HOT--------------------------- -->
 

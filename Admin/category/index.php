@@ -101,7 +101,7 @@ header("content-type:text/html; charset=UTF-8");
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../../logout.php" onclick="return confirm('Are you sure you want to logout?')">
+                        <a class="nav-link" href="/Main/logout.php" onclick="return confirm('Are you sure you want to logout?')">
                             <i class="bi bi-box-arrow-left"></i> Logout
                         </a>
                     </li>

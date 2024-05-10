@@ -59,7 +59,7 @@ header("content-type:text/html; charset=UTF-8");
                         <a href="#" class="dropdown-item">Settings</a>
                         <a href="#" class="dropdown-item">Billing</a>
                         <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">Logout</a>
+                        <a href="/Main/logout.php" class="dropdown-item">Logout</a>
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@ header("content-type:text/html; charset=UTF-8");
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../logout.php" onclick="return confirm('Are you sure you want to logout?')">
+                        <a class="nav-link" href="/Main/logout.php" onclick="return confirm('Are you sure you want to logout?')">
                             <i class="bi bi-box-arrow-left"></i> Logout
                         </a>
                     </li>

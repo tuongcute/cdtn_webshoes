@@ -19,6 +19,7 @@ header("content-type:text/html; charset=UTF-8");
   <link rel="stylesheet" href="./style.css">
   <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <!-- Dashboard -->
@@ -222,146 +223,153 @@ header("content-type:text/html; charset=UTF-8");
                         </div>
                     </div>
                 </div>
-                <div class="card shadow border-0 mb-7">
-                    <div class="card-header">
-                        <h5 class="mb-0">Đơn hàng mới *</h5>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-nowrap">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Số Thứ Tự</th>
-                                    <th scope="col">Tên Khách Hàng</th>
-                                    <th scope="col">Tên Sản Phẩm</th>
-                                    <th scope="col">Số Lượng</th>
-                                    <th scope="col">Giá Sản Phẩm</th>
-                                    <th scope="col">Địa Chỉ</th>
-                                    <th scope="col">Số Điện Thoại</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody>
-                                <tr>
-                                        <?php
-                                            // Lấy danh sách Sản Phẩm
-                                            if (!isset($_GET['page'])) {
-                                                $pg = 1;
-                                                echo ' Bạn đang ở trang: 1';
-                                            } else {
-                                                $pg = $_GET['page'];
-                                                echo ' Bạn đang ở trang: ' . $pg;
-                                            }
-                                            try {
+                <div class="row">
+    <div class="col-xl-6">
+        <div class="card shadow border-0 mb-7">
+            <div class="card-body">
+                <canvas id="productChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="card shadow border-0 mb-7">
+            <div class="card-body">
+                <canvas id="orderChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                                if (isset($_GET['page'])) {
-                                                    $page = $_GET['page'];
-                                                } else {
-                                                    $page = 1;
-                                                }
-                                                $limit = 10;
-                                                $start = ($page - 1) * $limit;
-
-                                                $sql = "SELECT * from orders, order_details, product
-                                                where order_details.order_id=orders.id and product.id=order_details.product_id ORDER BY order_date DESC limit $start,$limit ";
-                                                $order_details_List = executeResult($sql);
-                                                $total = 0;
-                                                $count = 0;
-                                                // if (is_array($order_details_List) || is_object($order_details_List)){
-                                                foreach ($order_details_List as $item) {
-                                                    echo '
-                                                        <tr>
-                                                            <td> 
-                                                                <a class="text-heading " href="#">
-                                                                    ' . (++$count) . '
-                                                                </a>
-                                                            </td>
-                                                            
-                                                            <td> 
-                                                                <a class="text-heading font-semibold" href="#">
-                                                                    ' . $item['fullname'] . '
-                                                                </a>
-                                                            </td>
-
-                                                            <td> 
-                                                                <a class="text-heading font-semibold" href="#">
-                                                                    ' . $item['title'] . '
-                                                                </a>
-                                                            </td>
-
-                                                            <td> 
-                                                                <a class="text-heading " href="#">
-                                                                    ' . $item['num'] . '
-                                                                </a>
-                                                            </td>
-
-                                                            <td> 
-                                                                <a class="text-heading " href="#">
-                                                                    ' . number_format($item['num'] * $item['price'], 0, ',', '.') . '<span> VNĐ</span>
-                                                                </a>
-                                                            </td>
-
-                                                            <td> 
-                                                                <a class="text-heading " href="#">
-                                                                    ' . $item['address'] . '
-                                                                </a>
-                                                            </td>
-
-                                                            <td> 
-                                                                <a class="text-heading " href="#">
-                                                                    ' . $item['phone_number'] . '
-                                                                </a>
-                                                            </td>
-                                                            
-                                                        
-                                                            
-                                                        </tr>
-                                                    ';
-                                                }
-                                            } catch (Exception $e) {
-                                                die("Lỗi thực thi sql: " . $e->getMessage());
-                                            }
-                                        ?>
-                                    
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer border-0 py-5">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                            <?php
-                                $sql = "SELECT * FROM `product`";
-                                $conn = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);
-                                $result = mysqli_query($conn, $sql);
-                                if (mysqli_num_rows($result)) {
-                                    $numrow = mysqli_num_rows($result);
-                                    $current_page = ceil($numrow / 60);
-                                    // echo $current_page;
-                                }
-                                for ($i = 1; $i <= $current_page; $i++) {
-                                    // Nếu là trang hiện tại thì hiển thị thẻ span
-                                    // ngược lại hiển thị thẻ a
-                                    if ($i == $current_page) {
-                                        echo '
-                                <li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
-                                    } else {
-                                        echo '
-                                <li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>
-                                        ';
-                                    }
-                                }
-                            ?>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
             </div>
         </main>
     </div>
 </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   <script src="script.js"></script>
+
+  <?php
+    // Kết nối đến cơ sở dữ liệu
+    $conn = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);
+
+    // Truy vấn để lấy số lượng sản phẩm theo từng id_category
+    $sql = "SELECT id_category, COUNT(*) as count FROM product GROUP BY id_category";
+    $result = mysqli_query($conn, $sql);
+
+    // Khởi tạo mảng để lưu trữ dữ liệu
+    $productCounts = [];
+    $categoryNames = [];
+    $colors = []; // Mảng màu sắc cho các thanh cột
+
+    // Mảng các màu sắc có thể sử dụng
+    $availableColors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'];
+
+    // Lặp qua kết quả truy vấn và lưu trữ dữ liệu vào mảng
+    $index = 0;
+    while ($row = mysqli_fetch_assoc($result)) {
+        $productCounts[$row['id_category']] = $row['count'];
+        // Truy vấn để lấy tên category
+        $sql_category = "SELECT name FROM category WHERE id = " . $row['id_category'];
+        $result_category = mysqli_query($conn, $sql_category);
+        $category_row = mysqli_fetch_assoc($result_category);
+        $categoryNames[$row['id_category']] = $category_row['name'];
+        // Gán màu sắc cho từng loại
+        $colors[$row['id_category']] = $availableColors[$index % count($availableColors)];
+        $index++;
+    }
+
+    // Đóng kết nối
+    mysqli_close($conn);
+?>
+
+
+<script>
+    var ctx = document.getElementById('productChart').getContext('2d');
+    var productChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode(array_values($categoryNames)); ?>,
+            datasets: [{
+                label: 'Số Lượng Sản Phẩm',
+                data: <?php echo json_encode(array_values($productCounts)); ?>,
+                backgroundColor: <?php echo json_encode(array_values($colors)); ?>,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+<?php
+// Kết nối đến cơ sở dữ liệu
+$conn = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);
+
+// Truy vấn để lấy số lượng chi tiết đơn hàng của mỗi đơn hàng
+$sql = "SELECT order_id, COUNT(*) as detail_count FROM order_details GROUP BY order_id";
+$result = mysqli_query($conn, $sql);
+
+// Mảng để lưu trữ số lượng chi tiết đơn hàng của mỗi đơn hàng
+$orderDetails = [];
+
+// Lặp qua kết quả truy vấn và lưu trữ dữ liệu vào mảng
+while ($row = mysqli_fetch_assoc($result)) {
+    $orderDetails[$row['order_id']] = $row['detail_count'];
+}
+
+// Truy vấn để lấy tên của mỗi khách hàng dựa trên order_id
+$customerNames = [];
+foreach ($orderDetails as $orderId => $detailCount) {
+    $sql = "SELECT fullname FROM orders WHERE id = $orderId";
+    $result = mysqli_query($conn, $sql);
+    $customer = mysqli_fetch_assoc($result);
+    $customerNames[$orderId] = $customer['fullname'];
+}
+
+// Đóng kết nối
+mysqli_close($conn);
+?>
+
+
+<script>
+    var ctx = document.getElementById('orderChart').getContext('2d');
+    var orderChart = new Chart(ctx, {
+        type: 'line', // Thay đổi loại biểu đồ thành dạng dòng
+        data: {
+            labels: <?php echo json_encode(array_values($customerNames)); ?>,
+            datasets: [{
+                label: 'Số Lượng Đơn Hàng',
+                data: <?php echo json_encode(array_values($orderDetails)); ?>,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                fill: false // Không tô màu dưới đường cong
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+
+
+
+
 </body>
 </html>

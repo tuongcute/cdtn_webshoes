@@ -440,6 +440,13 @@ if (count($idList) > 0) {
                                                         </span>
                                                     </p>
                                                 </div>
+                                                <div >
+                                                    <form class="" method="POST" target="_blank" enctype="application/x-www-form-urlencoded"
+                                                        action="/Main/xulythanhtoanmomo.php">
+                                                        <input type="hidden" name="total_amount" value="<?= $total ?>">
+                                                        <input type="submit" name="momo" value="Qr MOMO" class="btn btn-danger">
+                                                    </form>
+                                                </div>
                                             </div>
                                 
                         </div>
@@ -482,3 +489,26 @@ $(document).ready(function() {
 
 <hr class="opacity-20">
 <?php require_once('Layout/footer.php'); ?>
+
+<style>
+    .button-container {
+    display: flex;
+    justify-content: center; /* Căn giữa nút */
+}
+
+.payment-form {
+    display: flex;
+}
+
+.btn {
+    min-width: 150px; /* Độ rộng tối thiểu */
+    padding: 10px 20px; /* Khoảng cách giữa nút và văn bản */
+    font-size: 16px; /* Kích thước font chữ */
+    white-space: nowrap; /* Ngăn chặn việc xuống dòng */
+    overflow: hidden; /* Ẩn phần nội dung vượt ra khỏi nút */
+    text-overflow: ellipsis; /* Hiển thị dấu chấm cuối cùng khi nội dung vượt quá */
+    word-wrap: break-word; /* Phân chia từ khi nội dung vượt quá */
+}
+
+
+</style>
