@@ -2,6 +2,13 @@
 <?php
 include('config.php');
 ?>
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="Chatbot_Ai"
+  agent-id="a0f2a1a3-f212-4442-9f16-326da421b334"
+  language-code="vi"
+></df-messenger>
 <!--------------------FOOTER--------------------------- -->
 <footer class="section-p1"><!--mục footer -->
     <div class="col">
